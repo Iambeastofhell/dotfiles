@@ -1,0 +1,95 @@
+[meta]
+version = 1
+name = "Coffee Warm"
+description = "Soft coffee-brown UI with peach highlights. Calm, cozy, and elegant."
+variant = "dark"
+inherits = "vicinae-dark"
+icon = "icon.png"
+# ==================================================
+# Core colors (taken from the reference look)
+# ==================================================
+[colors.core]
+# Main background – deep warm coffee
+background = "#1E1513"
+
+# Cards / panels – slightly lighter brown
+secondary_background = "#261B18"
+
+# Text – warm peachy off-white
+foreground = "#F2D6C9"
+
+# Very subtle borders (almost invisible)
+border = { name = "colors.accents.brown", opacity = 0.25 }
+
+# Primary accent – peach / rose highlight
+accent = "#F3B9A7"
+
+# ==================================================
+# Accent palette (warm-first, no harsh colors)
+# ==================================================
+[colors.accents]
+# Coffee tones
+brown  = "#6B4A3E"
+
+# Peach / rose (used everywhere in the UI)
+orange = "#F3B9A7"
+red    = "#E39A8C"
+yellow = "#F6D1A8"
+
+# Muted supporting colors (kept very soft)
+green  = "#9BB39B"
+blue   = "#9FB4B4"
+cyan   = "#A6C1C3"
+purple = "#B7A3C9"
+magenta = "#C6A0B6"
+
+# ==================================================
+# Inputs (match cards, not boxes)
+# ==================================================
+[colors.input]
+background = "#261B18"
+foreground = "colors.core.foreground"
+
+border = { name = "colors.accents.brown", opacity = 0.22 }
+border_focus = { name = "colors.core.accent", opacity = 0.85 }
+
+placeholder = { name = "colors.core.foreground", opacity = 0.45 }
+
+# ==================================================
+# Selection
+# ==================================================
+[colors.selection]
+background = { name = "colors.core.accent", opacity = 0.28 }
+foreground = "#1E1513"
+
+# ==================================================
+# Lists / results
+# ==================================================
+[colors.list]
+background = "colors.core.background"
+
+hover_background = { name = "colors.core.accent", opacity = 0.18 }
+selected_background = { name = "colors.core.accent", opacity = 0.32 }
+selected_foreground = "#1E1513"
+
+# ==================================================
+# Scrollbars
+# ==================================================
+[colors.scrollbar]
+thumb = { name = "colors.accents.brown", opacity = 0.4 }
+thumb_hover = { name = "colors.core.accent", opacity = 0.6 }
+
+# ==================================================
+# Popups / tooltips
+# ==================================================
+[colors.popup]
+background = "#261B18"
+border = { name = "colors.accents.brown", opacity = 0.3 }
+
+# ==================================================
+# Shadows (soft, warm)
+# ==================================================
+[colors.shadow]
+color = "#000000"
+opacity = 0.4
+
