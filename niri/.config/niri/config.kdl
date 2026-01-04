@@ -277,6 +277,11 @@ layer-rule {
     geometry-corner-radius 12
 }
 
+
+cursor {
+    xcursor-theme "nightdmd"
+}
+
 include "dms/colors.kdl"
 include "dms/layout.kdl"
 include "dms/alttab.kdl"
