@@ -132,7 +132,7 @@ antigen bundle zsh-users/zsh-syntax-highlighting
 antigen bundle zsh-users/zsh-autosuggestions
 # Load the theme.
 antigen theme romkatv/powerlevel10k
-
+antigen bundle Aloxaf/fzf-tab
 # Tell Antigen that you're done.
 antigen apply
 . "$HOME/.cargo/env"
@@ -173,3 +173,12 @@ n() {
 [[ ! -r '/home/vishesh/.opam/opam-init/init.zsh' ]] || source '/home/vishesh/.opam/opam-init/init.zsh' > /dev/null 2> /dev/null
 # END opam configuration
 export PATH=$HOME/.local/bin:$PATH
+
+# pnpm
+export PNPM_HOME="/home/vishesh/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+. /home/vishesh/.nix-profile/etc/profile.d/nix.sh
