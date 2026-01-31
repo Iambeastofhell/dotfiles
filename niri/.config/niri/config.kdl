@@ -221,7 +221,7 @@ window-rule {
     match app-id="com.mitchellh.ghostty"
     match app-id="kitty"
     draw-border-with-background false
-    opacity 0.7
+    opacity 0.85
 }
 window-rule {
     match is-active=false
@@ -236,6 +236,20 @@ window-rule {
 window-rule {
     match app-id=r#"org.quickshell$"#
     open-floating true
+}
+
+window-rule {
+    match app-id=r#"zed"#
+    opacity 0.93
+}
+window-rule {
+    match app-id=r#"code"#
+    opacity 0.93
+}
+
+window-rule {
+    match app-id=r#"code"#
+    opacity 0.93
 }
 debug {
     honor-xdg-activation-with-invalid-serial
@@ -289,3 +303,9 @@ include "dms/layout.kdl"
 include "dms/alttab.kdl"
 include "dms/binds.kdl"
 //include "./noctalia.kdl"
+
+include "dms/outputs.kdl"
+
+//include "dms/cursor.kdl"
+
+include "dms/cursor.kdl"

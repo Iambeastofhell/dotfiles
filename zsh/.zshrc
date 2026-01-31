@@ -112,9 +112,9 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 #
 #
-[[ -o interactive ]] || return
-[[ -n "$__ZSHRC_SOURCED" ]] && return
-export __ZSHRC_SOURCED=1
+#[[ -o interactive ]] || return
+#[[ -n "$__ZSHRC_SOURCED" ]] && return
+#export __ZSHRC_SOURCED=1
 source /home/vishesh/antigen.zsh
 
 # Load the oh-my-zsh's library.
@@ -157,7 +157,7 @@ function y() {
 
 n() {
   if [ $# -eq 0 ]; then
-    nvim .
+    nvim 
   else
     nvim "$@"
   fi
@@ -182,3 +182,10 @@ case ":$PATH:" in
 esac
 # pnpm end
 . /home/vishesh/.nix-profile/etc/profile.d/nix.sh
+
+# bun completions
+[ -s "/home/vishesh/.bun/_bun" ] && source "/home/vishesh/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
