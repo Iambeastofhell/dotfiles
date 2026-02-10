@@ -1,0 +1,23 @@
+# niri-sidebar configuration
+
+[geometry]
+# Width of the sidebar in pixels
+width = 400
+# Height of the sidebar windows
+height = 335
+# Gap between windows in the stack
+gap = 10
+
+[margins]
+# Space from the top/bottom of the screen
+top = 50
+# Space from the right edge of the screen
+right = 10
+
+[interaction]
+# Width of windows when sidebar is hidden in pixels
+peek = 7
+# Width of window when sidebar is hidden but window is focused in pixels
+# set this equal to peek to disable this feature
+# set this equal to sidebar_width + offset_right to make focused windows "unhide"
+focus_peek = 50
