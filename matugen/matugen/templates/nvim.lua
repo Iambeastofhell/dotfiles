@@ -1,0 +1,18 @@
+return {
+  base00 = "{{colors.surface.dark.hex}}",
+  base01 = "{{colors.surface_container_low.dark.hex}}",
+  base02 = "{{colors.surface_container.dark.hex}}",
+  base03 = "{{colors.surface_container_high.dark.hex}}",
+  base04 = "{{colors.outline.dark.hex}}",
+  base05 = "{{colors.on_surface.dark.hex}}",
+  base06 = "{{colors.on_surface_variant.dark.hex}}",
+  base07 = "{{colors.inverse_surface.dark.hex}}",
+  base08 = "{{colors.error.dark.hex}}",
+  base09 = "{{colors.primary.dark.hex}}",
+  base0A = "{{colors.tertiary.dark.hex}}",
+  base0B = "{{colors.secondary.dark.hex}}",
+  base0C = "{{colors.primary_container.dark.hex}}",
+  base0D = "{{colors.secondary_container.dark.hex}}",
+  base0E = "{{colors.inverse_primary.dark.hex}}",
+  base0F = "{{colors.error_container.dark.hex}}",
+}

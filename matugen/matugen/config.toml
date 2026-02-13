@@ -1,0 +1,9 @@
+[config]
+# ...
+[templates.zed]
+input_path = '~/.config/matugen/templates/zed-colors.json'
+output_path = '~/.config/zed/themes/matugen.json'
+# ...
+[templates.obsidian]
+input_path = '~/.config/matugen/templates/obsidian-matugen.css'
+output_path = '/home/vishesh/Documents/Obsidian Vault/.obsidian/snippets/matugen.css' 
