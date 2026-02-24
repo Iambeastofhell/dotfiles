@@ -1,0 +1,434 @@
+// This config is in the KDL format: https://kdl.dev
+// "/-" comments out the following node.
+// Check the wiki for a full description of the configuration:
+// https://github.com/YaLTeR/niri/wiki/Configuration:-Introduction
+config-notification {
+    disable-failed
+}
+//spawn-at-startup "qs" "-c" "noctalia-shell"
+gestures {
+    hot-corners {
+        off
+    }
+}
+spawn-at-startup "wayvid-gui"
+spawn-at-startup "~/.local/bin/niri-sidebar" "listen"
+//spawn-at-startup "walker" "--gapplication-service"
+// Input device configuration.
+// Find the full list of options on the wiki:
+// https://github.com/YaLTeR/niri/wiki/Configuration:-Input
+input {
+    keyboard {
+        xkb {
+        }
+        numlock
+    }
+    touchpad {
+	    tap
+	    natural-scroll
+    }
+    mouse {
+    }
+    trackpoint {
+    }
+}
+// You can configure outputs by their name, which you can find
+// by running `niri msg outputs` while inside a niri instance.
+// The built-in laptop monitor is usually called "eDP-1".
+// Find more information on the wiki:
+// https://github.com/YaLTeR/niri/wiki/Configuration:-Outputs
+// Remember to uncomment the node by removing "/-"!
+/-output "eDP-2" {
+    mode "2560x1600@239.998993"
+    position x=2560 y=0
+    variable-refresh-rate
+}
+// Settings that influence how windows are positioned and sized.
+// Find more information on the wiki:
+// https://github.com/YaLTeR/niri/wiki/Configuration:-Layout
+layout {
+    // Set gaps around windows in logical pixels.
+    background-color "transparent"
+    // When to center a column when changing focus, options are:
+    // - "never", default behavior, focusing an off-screen column will keep at the left
+    //   or right edge of the screen.
+    // - "always", the focused column will always be centered.
+    // - "on-overflow", focusing a column will center it if it doesn't fit
+    //   together with the previously focused column.
+    center-focused-column "never"
+    // You can customize the widths that "switch-preset-column-width" (Mod+R) toggles between.
+    preset-column-widths {
+        // Proportion sets the width as a fraction of the output width, taking gaps into account.
+        // For example, you can perfectly fit four windows sized "proportion 0.25" on an output.
+        // The default preset widths are 1/3, 1/2 and 2/3 of the output.
+        proportion 0.33333
+        proportion 0.5
+        proportion 0.66667
+        // Fixed sets the width in logical pixels exactly.
+        // fixed 1920
+    }
+    // You can also customize the heights that "switch-preset-window-height" (Mod+Shift+R) toggles between.
+    // preset-window-heights { }
+    // You can change the default width of the new windows.
+    default-column-width { proportion 0.5; }
+    // If you leave the brackets empty, the windows themselves will decide their initial width.
+    // default-column-width {}
+    // By default focus ring and border are rendered as a solid background rectangle
+    // behind windows. That is, they will show up through semitransparent windows.
+    // This is because windows using client-side decorations can have an arbitrary shape.
+    //
+    // If you don't like that, you should uncomment `prefer-no-csd` below.
+    // Niri will draw focus ring and border *around* windows that agree to omit their
+    // client-side decorations.
+    //
+    // Alternatively, you can override it with a window rule called
+    // `draw-border-with-background`.
+    border {
+        off
+        width 4
+        active-color   "#707070"      // Neutral gray
+        inactive-color "#d0d0d0"      // Light gray
+        urgent-color   "#cc4444"      // Softer red
+    }
+    shadow {
+        softness 30
+        spread 5
+        offset x=0 y=5
+        color "#0007"
+    }
+    struts {
+    }
+}
+layer-rule {
+    match namespace="^quickshell$"
+    place-within-backdrop true
+}
+overview {
+    workspace-shadow {
+        off
+    }
+}
+// Add lines like this to spawn processes at startup.
+// Note that running niri as a session supports xdg-desktop-autostart,
+// which may be more convenient to use.
+// See the binds section below for more spawn examples.
+// This line starts waybar, a commonly used bar for Wayland compositors.
+//spawn-at-startup "/usr/bin/walker" "--gapplication-service"
+spawn-at-startup "bash" "-c" "wl-paste --watch cliphist store &"
+environment {
+  XDG_CURRENT_DESKTOP "niri"
+}
+hotkey-overlay {
+    skip-at-startup
+}
+prefer-no-csd
+screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
+animations {
+    workspace-switch {
+        spring damping-ratio=0.80 stiffness=523 epsilon=0.0001
+    }
+    window-open {
+        duration-ms 150
+        curve "ease-out-expo"
+      }
+    window-close {
+        duration-ms 450
+        curve "linear"
+        custom-shader r"
+            float hash(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
+            float noise(vec2 p) {
+                vec2 i = floor(p); vec2 f = fract(p);
+                f = f * f * (3.0 - 2.0 * f);
+                return mix(mix(hash(i), hash(i + vec2(1.0, 0.0)), f.x),
+                           mix(hash(i + vec2(0.0, 1.0)), hash(i + vec2(1.0, 1.0)), f.x), f.y);
+            }
+            vec3 get_ember_colors(float seed, out vec3 inner, out vec3 outer) {
+                if (seed < 0.125) { inner = vec3(1.0, 0.3, 0.0); outer = vec3(1.0, 0.8, 0.2); }
+                else if (seed < 0.250) { inner = vec3(0.2, 0.4, 1.0); outer = vec3(0.5, 0.8, 1.0); }
+                else if (seed < 0.375) { inner = vec3(0.6, 0.1, 0.9); outer = vec3(0.9, 0.5, 1.0); }
+                else if (seed < 0.500) { inner = vec3(0.1, 0.8, 0.2); outer = vec3(0.5, 1.0, 0.3); }
+                else if (seed < 0.625) { inner = vec3(1.0, 0.1, 0.4); outer = vec3(1.0, 0.5, 0.7); }
+                else if (seed < 0.750) { inner = vec3(0.0, 0.8, 0.9); outer = vec3(0.7, 1.0, 1.0); }
+                else if (seed < 0.875) { inner = vec3(0.9, 0.7, 0.1); outer = vec3(1.0, 1.0, 0.8); }
+                else { inner = vec3(0.8, 0.2, 0.1); outer = vec3(1.0, 0.5, 0.2); }
+                return inner;
+            }
+            float ash_particle(vec2 uv, float seed) {
+                float pn = noise(uv * 150.0 + seed * 50.0);
+                return pn < 0.78 ? 0.0 : (pn - 0.78) / 0.22;
+            }
+            float ember_spark(vec2 uv, float seed) {
+                float sn = hash(floor(uv * 280.0) + seed * 100.0);
+                return sn < 0.982 ? 0.0 : pow((sn - 0.982) / 0.018, 2.0);
+            }
+            vec4 close_color(vec3 coords_geo, vec3 size_geo) {
+                float progress = niri_clamped_progress;
+                vec2 uv = coords_geo.xy;
+                vec3 ember_inner, ember_outer;
+                get_ember_colors(niri_random_seed, ember_inner, ember_outer);
+                vec4 particles = vec4(0.0);
+                for (float i = 0.0; i < 7.0; i++) {
+                    float ls = niri_random_seed + i * 0.1;
+                    vec2 auv = uv; auv.y += progress * (0.25 + i * 0.12);
+                    auv.x += progress * (noise(vec2(i, ls) * 10.0) - 0.5) * 0.4 + sin(progress * 6.28 + i * 1.5) * 0.03;
+                    float ed = min(min(auv.x, 1.0 - auv.x), min(auv.y, 1.0 - auv.y));
+                    float sz = progress * 0.75;
+                    if (ed < sz && ed > 0.0) {
+                        float p = ash_particle(auv, ls);
+                        float fade = (1.0 - smoothstep(0.0, sz, ed)) * (1.0 - progress * 0.4);
+                        particles.rgb += mix(ember_outer * 0.5, vec3(0.3), 0.4 + i * 0.1) * p * fade * 0.7;
+                        particles.a += p * fade * 0.5;
+                    }
+                }
+                for (float j = 0.0; j < 8.0; j++) {
+                    float ss = niri_random_seed + j * 0.17 + 0.5;
+                    vec2 suv = uv; suv.y += progress * (0.4 + j * 0.1);
+                    suv.x += progress * (hash(vec2(j, ss)) - 0.5) * 0.5 + sin(progress * 10.0 + j * 2.0) * 0.025;
+                    float ed = min(min(suv.x, 1.0 - suv.x), min(suv.y, 1.0 - suv.y));
+                    float sz = progress * 0.7;
+                    if (ed < sz && ed > 0.0) {
+                        float sp = ember_spark(suv, ss);
+                        float fade = (1.0 - smoothstep(0.0, sz * 0.8, ed)) * (1.0 - progress * 0.6);
+                        float flicker = 0.7 + 0.3 * sin(progress * 20.0 + j * 3.0);
+                        particles.rgb += ember_inner * sp * fade * flicker * 1.5;
+                        particles.a += sp * fade * 0.8;
+                    }
+                }
+                if (coords_geo.x < 0.0 || coords_geo.x > 1.0 || coords_geo.y < 0.0 || coords_geo.y > 1.0) return particles;
+                vec3 coords_tex = niri_geo_to_tex * vec3(uv, 1.0);
+                vec4 color = texture2D(niri_tex, coords_tex.st);
+                float edge_dist = min(min(uv.x, 1.0 - uv.x), min(uv.y, 1.0 - uv.y));
+                float n = noise(uv * 8.0 + niri_random_seed * 100.0) * 0.3;
+                float burn_line = edge_dist + n;
+                float threshold = progress * 0.8;
+                if (burn_line > threshold + 0.08) return color + particles;
+                else if (burn_line > threshold) {
+                    vec3 ember = mix(ember_inner, ember_outer, 1.0 - (burn_line - threshold) / 0.08);
+                    return vec4(mix(ember, color.rgb, 0.3), color.a) + particles;
+                } else return particles;
+            }
+        "
+
+      }
+    horizontal-view-movement {
+        spring damping-ratio=0.85 stiffness=423 epsilon=0.0001
+    }
+    window-movement {
+        spring damping-ratio=0.75 stiffness=323 epsilon=0.0001
+    }
+    window-resize {
+        spring damping-ratio=0.85 stiffness=423 epsilon=0.0001
+    }
+    config-notification-open-close {
+        spring damping-ratio=0.65 stiffness=923 epsilon=0.001
+    }
+    screenshot-ui-open {
+        duration-ms 200
+        curve "ease-out-quad"
+    }
+    overview-open-close {
+        spring damping-ratio=0.75 stiffness=800 epsilon=0.0001
+    }
+}
+// Window rules let you adjust behavior for individual windows.
+// Find more information on the wiki:
+// https://github.com/YaLTeR/niri/wiki/Configuration:-Window-Rules
+// Work around WezTerm's initial configure bug
+// by setting an empty default-column-width.
+
+window-rule {
+    match is-floating=true
+    min-width 100
+    min-height 100
+}
+window-rule {
+    // This regular expression is intentionally made as specific as possible,
+    // since this is the default config, and we want no false positives.
+    // You can get away with just app-id="wezterm" if you want.
+    match app-id=r#"^org\.wezfurlong\.wezterm$"#
+    default-column-width {}
+}
+window-rule {
+    match app-id=r#"^org\.gnome\."#
+    draw-border-with-background false
+    geometry-corner-radius 12
+    clip-to-geometry true
+}
+window-rule {
+    match app-id=r#"^gnome-control-center$"#
+    match app-id=r#"^pavucontrol$"#
+    match app-id=r#"^nm-connection-editor$"#
+    default-column-width { proportion 0.5; }
+    open-floating false
+}
+window-rule {
+    match app-id=r#"^gnome-calculator$"#
+    match app-id=r#"^galculator$"#
+    match app-id=r#"^blueman-manager$"#
+    match app-id=r#"^org\.gnome\.Nautilus$"#
+    match app-id=r#"^steam$"#
+    match app-id=r#"^xdg-desktop-portal$"#
+    open-floating true
+}
+
+blur {
+    //off
+    passes 3
+    offset 2.0
+    noise 0.02
+    saturation 1.2
+}
+
+window-rule {
+    match app-id=r#"^org\.wezfurlong\.wezterm$"#
+    match app-id="Alacritty"
+    match app-id="com.mitchellh.ghostty"
+    match app-id="kitty"
+    draw-border-with-background false
+    opacity 0.85
+    background-effect {
+        blur false 
+    }
+}
+
+
+
+window-rule {
+    // This applies to all windows
+    match {}
+    
+    // This disables the "see-through to wallpaper" behavior
+    background-effect {
+      //xray false
+      
+    }
+}
+
+
+window-rule {
+    match app-id="zen"
+    draw-border-with-background false
+    opacity 0.9
+background-effect {
+        blur true
+    }
+
+  }
+
+window-rule {
+    match is-active=false
+    opacity 0.9
+}
+window-rule {
+    match app-id=r#"firefox$"# title="^Picture-in-Picture$"
+    match app-id="zoom"
+    open-floating true
+}
+// Open dms windows as floating by default
+window-rule {
+    match app-id=r#"org.quickshell$"#
+    open-floating true
+}
+
+window-rule {
+    match app-id=r#"zed"#
+    opacity 0.93
+    background-effect {
+        blur true
+    }
+}
+window-rule {
+    match app-id=r#"proton"#
+    opacity 0.93
+    background-effect {
+        blur true
+    }
+}
+
+
+window-rule {
+    match app-id=r#"code"#
+    opacity 0.93
+}
+debug {
+    honor-xdg-activation-with-invalid-serial
+}
+window-rule {
+    match app-id="walker"
+    // This tells Niri to stop drawing its own opaque background behind Walker
+    draw-border-with-background false
+    geometry-corner-radius 12
+}
+// Override to disable super+tab
+recent-windows {
+    binds {
+        Alt+Tab         { next-window scope="output"; }
+        Alt+Shift+Tab   { previous-window scope="output"; }
+        Alt+grave       { next-window filter="app-id"; }
+        Alt+Shift+grave { previous-window filter="app-id"; }
+    }
+}
+
+window-rule {
+    match title="ilgwg_desktop_gremlins.py"
+    draw-border-with-background false
+    opacity 0.99
+    focus-ring {
+        off
+    }
+    border {
+        // Same as focus-ring.
+    }
+    shadow {
+        off
+    }
+}
+
+layer-rule {
+    match namespace="hyprlax"
+    place-within-backdrop true
+}
+layer-rule {
+    match namespace="wayvid"
+    place-within-backdrop true
+}
+// ~/.config/niri/config.kdl
+
+// Use a layer-rule for Walker because it is a layer-shell surface
+layer-rule {
+    // Exact match for the "walker" namespace
+    match namespace=r#"^walker$"#
+    
+    // Allows the GTK CSS transparency (rgba) to show through
+    opacity 1.0 
+
+    shadow {
+        on
+        // This MUST be inside the shadow block
+        draw-behind-window true
+    }
+
+    // This property only affects the shadow's shape
+    geometry-corner-radius 12
+}
+
+
+//cursor {
+  //  xcursor-theme "nightdmd"
+  //xcursor-theme "curdiamond"
+  //xcursor-size 48
+//}
+
+include "dms/colors.kdl"
+include "dms/layout.kdl"
+include "dms/alttab.kdl"
+include "dms/binds.kdl"
+//include "./noctalia.kdl"
+
+include "dms/outputs.kdl"
+
+//include "dms/cursor.kdl"
+
+include "dms/cursor.kdl"
+
+include "dms/windowrules.kdl"

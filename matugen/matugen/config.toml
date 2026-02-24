@@ -7,3 +7,8 @@ output_path = '~/.config/zed/themes/matugen.json'
 [templates.obsidian]
 input_path = '~/.config/matugen/templates/obsidian-matugen.css'
 output_path = '/home/vishesh/Documents/Obsidian Vault/.obsidian/snippets/matugen.css' 
+
+[templates.wayvid_hijack]
+input_path = "/home/vishesh/.config/matugen/templates/wayvid.template"
+output_path = "/tmp/dms_current_wallpaper.txt"
+post_hook = "python3 /home/vishesh/.config/matugen/scripts/wayvid_hijack.py"
