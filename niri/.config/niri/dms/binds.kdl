@@ -1,4 +1,10 @@
 binds {
+
+    Mod+Shift+W { spawn "dms" "ipc" "wallpaperCarousel" "toggle"; }
+    Mod+TouchpadScrollDown { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.02+"; }
+    Mod+TouchpadScrollUp   { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.02-"; }
+    Mod+TouchpadScrollLeft { spawn "brightnessctl" "set" "10%+"; }
+    Mod+TouchpadScrollRight   { spawn "brightnessctl" "set" "10%-"; }
     Alt+space hotkey-overlay-title="Control Center: Toggle" { spawn "dms" "ipc" "call" "control-center" "toggle"; }
     Ctrl+Alt+Delete hotkey-overlay-title="Task Manager" { spawn "dms" "ipc" "call" "processlist" "focusOrToggle"; }
     Mod+Alt+L hotkey-overlay-title="Lock Screen" { spawn "dms" "ipc" "call" "lock" "lock"; }

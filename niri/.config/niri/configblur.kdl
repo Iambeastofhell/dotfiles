@@ -116,6 +116,7 @@ overview {
 //spawn-at-startup "/usr/bin/walker" "--gapplication-service"
 spawn-at-startup "bash" "-c" "wl-paste --watch cliphist store &"
 environment {
+  _JAVA_AWT_WM_NONREPARENTING "1"
   XDG_CURRENT_DESKTOP "niri"
 }
 hotkey-overlay {
@@ -273,7 +274,7 @@ window-rule {
 
 blur {
     //off
-    passes 3
+    passes 2
     offset 2.0
     noise 0.02
     saturation 1.2
@@ -332,11 +333,22 @@ window-rule {
 
 window-rule {
     match app-id=r#"zed"#
-    opacity 0.93
+    opacity 0.83
     background-effect {
         blur true
     }
 }
+
+window-rule {
+    match app-id=r#"obsidian"#
+    opacity 0.83
+    background-effect {
+        blur true
+    }
+}
+
+
+
 window-rule {
     match app-id=r#"proton"#
     opacity 0.93
