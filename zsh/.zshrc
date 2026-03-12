@@ -55,7 +55,7 @@ export ZSH="$HOME/.oh-my-zsh"
 # You can also set it to another string to have that shown instead of the default red dots.
 # e.g. COMPLETION_WAITING_DOTS="%F{yellow}waiting...%f"
 # Caution: this setting can cause issues with multiline prompts in zsh < 5.7.1 (see #5765)
-# COMPLETION_WAITING_DOTS="true"
+#COMPLETION_WAITING_DOTS="true"
 
 # Uncomment the following line if you want to disable marking untracked files
 # under VCS as dirty. This makes repository status check for large repositories
@@ -78,9 +78,35 @@ export ZSH="$HOME/.oh-my-zsh"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
 
+
+
+plugins=(git fzf)
+
+source /usr/share/fzf/shell/key-bindings.zsh
 source $ZSH/oh-my-zsh.sh
+
+
+fzf-history-widget() {
+  local selected num
+  setopt localoptions noglobsubst noposixbuiltins pipefail 2> /dev/null
+
+  selected=$(fc -rl 1 | \
+    fzf --height 60% --layout=reverse --border \
+        --prompt="History > " \
+        --preview 'echo {}' \
+        --preview-window=down:3:wrap \
+        --bind 'ctrl-r:toggle-sort' \
+        --bind 'ctrl-y:execute-silent(sh -c '\''if command -v wl-copy >/dev/null 2>&1; then printf %s "${1#* }" | wl-copy; elif command -v xclip >/dev/null 2>&1; then printf %s "${1#* }" | xclip -selection clipboard; elif command -v xsel >/dev/null 2>&1; then printf %s "${1#* }" | xsel --clipboard --input; fi'\'' sh {})+abort' \
+        --with-nth=2..)
+
+  if [ -n "$selected" ]; then
+    num=${selected%% *}
+    BUFFER=${selected#* }
+    CURSOR=$#BUFFER
+  fi
+  zle reset-prompt
+}
 
 # User configuration
 
@@ -135,6 +161,10 @@ antigen theme romkatv/powerlevel10k
 antigen bundle Aloxaf/fzf-tab
 # Tell Antigen that you're done.
 antigen apply
+
+zle -N fzf-history-widget
+bindkey '^R' fzf-history-widget
+
 . "$HOME/.cargo/env"
 export PATH=/home/vishesh/go/bin:$PATH
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
@@ -142,10 +172,21 @@ export PATH=/home/vishesh/go/bin:$PATH
 
 export EDITOR=nvim
 
+export ANDROID_HOME=$HOME/Android/Sdk
+export ANDROID_SDK_ROOT=$ANDROID_HOME
+
+export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin
+export PATH=$PATH:$ANDROID_HOME/platform-tools
+export PATH=$PATH:$ANDROID_HOME/emulator
+
+
 alias wdl="/home/vishesh/wordle.sh"
 alias ls="lsd"
 alias ll="lsd -l"
 alias la="lsd -a"
+alias wi="~/newwifi.sh"
+alias bzf='fzf --preview "bat --color=always --style=numbers --line-range=:500 {}"'
+
 function y() {
 	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
 	yazi "$@" --cwd-file="$tmp"
@@ -173,7 +214,7 @@ n() {
 [[ ! -r '/home/vishesh/.opam/opam-init/init.zsh' ]] || source '/home/vishesh/.opam/opam-init/init.zsh' > /dev/null 2> /dev/null
 # END opam configuration
 export PATH=$HOME/.local/bin:$PATH
-
+export MANPAGER="bat -plman"
 # pnpm
 export PNPM_HOME="/home/vishesh/.local/share/pnpm"
 case ":$PATH:" in
@@ -189,3 +230,8 @@ esac
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
+export PATH=$PATH:/usr/games
+export JAVA_HOME=/usr/lib/jvm/java-25-openjdk
+batdiff() {
+    git diff --name-only --relative --diff-filter=d -z | xargs -0 bat --diff
+}
