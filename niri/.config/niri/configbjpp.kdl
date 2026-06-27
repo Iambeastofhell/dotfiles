@@ -11,7 +11,7 @@ gestures {
         off
     }
 }
-spawn-at-startup "wayvid-gui"
+
 spawn-at-startup "~/.local/bin/niri-sidebar" "listen"
 //spawn-at-startup "walker" "--gapplication-service"
 // Input device configuration.
@@ -116,7 +116,6 @@ overview {
 //spawn-at-startup "/usr/bin/walker" "--gapplication-service"
 spawn-at-startup "bash" "-c" "wl-paste --watch cliphist store &"
 environment {
-//  _JAVA_AWT_WM_NONREPARENTING "1"
   XDG_CURRENT_DESKTOP "niri"
 }
 hotkey-overlay {
@@ -271,15 +270,6 @@ window-rule {
     match app-id=r#"^xdg-desktop-portal$"#
     open-floating true
 }
-
-blur {
-    //off
-    passes 2
-    offset 2.0
-    noise 0.02
-    saturation 1.2
-}
-
 window-rule {
     match app-id=r#"^org\.wezfurlong\.wezterm$"#
     match app-id="Alacritty"
@@ -287,110 +277,13 @@ window-rule {
     match app-id="kitty"
     draw-border-with-background false
     opacity 0.85
-    background-effect {
-        blur false 
-    }
 }
-
-window-rule {
-    match {} // Matches all windows
-    background-effect {
-        xray true
-    }
-}
-
-
- 
-layer-rule {
-    match namespace=r#"^dms:.*"#
-    background-effect {
-        blur true
-        xray false
-    }
-}
-
-layer-rule {
-    match namespace="dms:bar"
-    background-effect {
-        blur false
-        xray false
-    }
-}
-
-layer-rule {
-    match namespace="dms:niri-overview-spotlight"
-    background-effect {
-        blur false
-        xray false
-    }
-}
-
-layer-rule {
-    match namespace=r#"^dms:plugins:wallpaperCarousel.*"#
-    background-effect {
-        blur false
-        xray false
-    }
-}
-
-layer-rule {
-    match namespace=r#"^dms:.*:background$"#
-    background-effect {
-        blur false
-        xray false
-    }
-}
-
-window-rule {
-  match app-id="vicinae"
-  background-effect {
-    blur true
-    xray false
-  }
-}
-
-layer-rule {
-  match namespace="vicinae"
-  background-effect {
-    blur true
-    xray false
-  }
-}
-
-layer-rule {
-  match namespace="^noctalia-(background|launcher-overlay|dock)-.*$"
-  background-effect {
-    xray false
-  }
-}
-
-layer-rule {
-  match namespace="^noctalia-wallpaper*"
-  place-within-backdrop true
-}
-
-
-window-rule {
-    // This applies to all windows
-    match {}
-    
-    // This disables the "see-through to wallpaper" behavior
-    background-effect {
-      //xray false
-      
-    }
-}
-
 
 window-rule {
     match app-id="zen"
     draw-border-with-background false
-    opacity 0.9
-background-effect {
-        blur true
-    }
-
-  }
+    opacity 0.90
+}
 
 window-rule {
     match is-active=false
@@ -409,30 +302,8 @@ window-rule {
 
 window-rule {
     match app-id=r#"zed"#
-    opacity 0.90
-    background-effect {
-        blur true
-    }
-}
-
-window-rule {
-    match app-id=r#"obsidian"#
-    opacity 0.83
-    background-effect {
-        blur true
-    }
-}
-
-
-
-window-rule {
-    match app-id=r#"proton"#
     opacity 0.93
-    background-effect {
-        blur true
-    }
 }
-
 
 window-rule {
     match app-id=r#"code"#
@@ -476,10 +347,7 @@ layer-rule {
     match namespace="hyprlax"
     place-within-backdrop true
 }
-layer-rule {
-    match namespace="wayvid"
-    place-within-backdrop true
-}
+
 // ~/.config/niri/config.kdl
 
 // Use a layer-rule for Walker because it is a layer-shell surface
@@ -498,27 +366,6 @@ layer-rule {
 
     // This property only affects the shadow's shape
     geometry-corner-radius 12
-}
-
-window-rule {
-    match title="ilgwg_desktop_gremlins.py"
-    draw-border-with-background false
-    opacity 0.99
-    geometry-corner-radius 0
-    clip-to-geometry false
-    background-effect {
-        blur false
-        xray false
-    }
-    focus-ring {
-        off
-    }
-    border {
-        off
-    }
-    shadow {
-        off
-    }
 }
 
 

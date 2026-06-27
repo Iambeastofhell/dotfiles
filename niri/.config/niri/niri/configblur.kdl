@@ -116,7 +116,7 @@ overview {
 //spawn-at-startup "/usr/bin/walker" "--gapplication-service"
 spawn-at-startup "bash" "-c" "wl-paste --watch cliphist store &"
 environment {
-//  _JAVA_AWT_WM_NONREPARENTING "1"
+  _JAVA_AWT_WM_NONREPARENTING "1"
   XDG_CURRENT_DESKTOP "niri"
 }
 hotkey-overlay {
@@ -292,82 +292,6 @@ window-rule {
     }
 }
 
-window-rule {
-    match {} // Matches all windows
-    background-effect {
-        xray true
-    }
-}
-
-
- 
-layer-rule {
-    match namespace=r#"^dms:.*"#
-    background-effect {
-        blur true
-        xray false
-    }
-}
-
-layer-rule {
-    match namespace="dms:bar"
-    background-effect {
-        blur false
-        xray false
-    }
-}
-
-layer-rule {
-    match namespace="dms:niri-overview-spotlight"
-    background-effect {
-        blur false
-        xray false
-    }
-}
-
-layer-rule {
-    match namespace=r#"^dms:plugins:wallpaperCarousel.*"#
-    background-effect {
-        blur false
-        xray false
-    }
-}
-
-layer-rule {
-    match namespace=r#"^dms:.*:background$"#
-    background-effect {
-        blur false
-        xray false
-    }
-}
-
-window-rule {
-  match app-id="vicinae"
-  background-effect {
-    blur true
-    xray false
-  }
-}
-
-layer-rule {
-  match namespace="vicinae"
-  background-effect {
-    blur true
-    xray false
-  }
-}
-
-layer-rule {
-  match namespace="^noctalia-(background|launcher-overlay|dock)-.*$"
-  background-effect {
-    xray false
-  }
-}
-
-layer-rule {
-  match namespace="^noctalia-wallpaper*"
-  place-within-backdrop true
-}
 
 
 window-rule {
@@ -409,7 +333,7 @@ window-rule {
 
 window-rule {
     match app-id=r#"zed"#
-    opacity 0.90
+    opacity 0.83
     background-effect {
         blur true
     }
@@ -498,27 +422,6 @@ layer-rule {
 
     // This property only affects the shadow's shape
     geometry-corner-radius 12
-}
-
-window-rule {
-    match title="ilgwg_desktop_gremlins.py"
-    draw-border-with-background false
-    opacity 0.99
-    geometry-corner-radius 0
-    clip-to-geometry false
-    background-effect {
-        blur false
-        xray false
-    }
-    focus-ring {
-        off
-    }
-    border {
-        off
-    }
-    shadow {
-        off
-    }
 }
 
 
